@@ -1,52 +1,64 @@
 #include <iostream>
 using namespace std;
 
-// Ukuran maksimum stack
+
 const int SIZE = 5;
+struct Stack {
+    int data[SIZE];
+    int top;
+};
+Stack A, B, C;
 
-// Stack dan variabel top untuk setiap tiang
-int A[SIZE], topA = -1;
-int B[SIZE], topB = -1;
-int C[SIZE], topC = -1;
 
-// Operasi dasar stack
-void push(int stack[], int &top, int data) {
-    top++;
-    stack[top] = data;
+void init(Stack &s) {
+    s.top = -1;
 }
 
-int pop(int stack[], int &top) {
-    int data = stack[top];
-    top--;
+// OPERASI STACK
+void push(Stack &s, int data) {
+    s.top++;
+    s.data[s.top] = data;
+}
+
+int pop(Stack &s) {
+    int data = s.data[s.top];
+    s.top--;
     return data;
 }
 
-// Fungsi untuk memindahkan batu
-void pindahkan(int stackAwal[], int &topAwal, int stackAkhir[], int &topAkhir, char asal, char tujuan) {
-    int batu = pop(stackAwal, topAwal);
-    push(stackAkhir, topAkhir, batu);
-    cout << "Pindahkan batu " << batu << " dari " << asal << " ke " << tujuan << endl;
+// FUNGSI MEMINDAHKAN LEMPENGAN 
+void pindahkan(Stack &asal, Stack &tujuan, char namaAsal, char namaTujuan) {
+    int batu = pop(asal);
+    push(tujuan, batu);
+    cout << "-> Pindahkan batu " << batu << " dari " << namaAsal << " ke " << namaTujuan << endl;
 }
 
-// Fungsi rekursif Menara Hanoi
-void hanoi(int n, int A[], int &topA, int B[], int &topB, int C[], int &topC, char asal, char bantu, char tujuan) {
+// FUNGSI UNTUK MENGATUR PEMINDAHAN LEMPENGAN 
+void hanoi(int n, Stack &asal, Stack &bantu, Stack &tujuan, char namaAsal, char namaBantu, char namaTujuan) {
     if (n == 1) {
-        pindahkan(A, topA, C, topC, asal, tujuan);
+        pindahkan(asal, tujuan, namaAsal, namaTujuan);
     } else {
-        hanoi(n-1, A, topA, C, topC, B, topB, asal, tujuan, bantu);
-        pindahkan(A, topA, C, topC, asal, tujuan);
-        hanoi(n-1, B, topB, A, topA, C, topC, bantu, asal, tujuan);
+        hanoi(n-1, asal, tujuan, bantu, namaAsal, namaTujuan, namaBantu);
+        pindahkan(asal, tujuan, namaAsal, namaTujuan);
+        hanoi(n-1, bantu, asal, tujuan, namaBantu, namaAsal, namaTujuan);
     }
 }
 
+
 int main() {
-    // Isi batu ke tiang A (30, 20, 10)
-    push(A, topA, 30);
-    push(A, topA, 20);
-    push(A, topA, 10);
+cout << "===============================" << endl;
+cout << " | Menara Hanoi dengan Stack | " << endl;
+cout << "===============================" << endl;
 
-    // Mulai proses Hanoi
-    hanoi(3, A, topA, B, topB, C, topC, 'A', 'B', 'C');
 
+    init(A);
+    init(B);
+    init(C);
+
+    push(A, 3);
+    push(A, 2);
+    push(A, 1);
+
+    hanoi(3, A, B, C, 'A', 'B', 'C');
     return 0;
 }
