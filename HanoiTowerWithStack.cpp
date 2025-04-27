@@ -1,14 +1,12 @@
 #include <iostream>
 using namespace std;
 
-
 const int SIZE = 5;
 struct Stack {
     int data[SIZE];
     int top;
 };
 Stack A, B, C;
-
 
 void init(Stack &s) {
     s.top = -1;
@@ -28,9 +26,9 @@ int pop(Stack &s) {
 
 // FUNGSI MEMINDAHKAN LEMPENGAN 
 void pindahkan(Stack &asal, Stack &tujuan, char namaAsal, char namaTujuan) {
-    int batu = pop(asal);
-    push(tujuan, batu);
-    cout << "-> Pindahkan batu " << batu << " dari " << namaAsal << " ke " << namaTujuan << endl;
+    int lempengan = pop(asal);
+    push(tujuan, lempengan);
+    cout << "-> Pindahkan lempengan " << lempengan << " dari " << namaAsal << " ke " << namaTujuan << endl;
 }
 
 // FUNGSI UNTUK MENGATUR PEMINDAHAN LEMPENGAN 
@@ -44,12 +42,10 @@ void hanoi(int n, Stack &asal, Stack &bantu, Stack &tujuan, char namaAsal, char 
     }
 }
 
-
 int main() {
-cout << "===============================" << endl;
-cout << " | Menara Hanoi dengan Stack | " << endl;
-cout << "===============================" << endl;
-
+    cout << "===============================" << endl;
+    cout << " | Menara Hanoi dengan Stack | " << endl;
+    cout << "===============================" << endl;
 
     init(A);
     init(B);
